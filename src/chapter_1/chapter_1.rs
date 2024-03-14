@@ -1,7 +1,6 @@
 pub mod chapter_1 {
     use core::fmt;
 
-
     fn _debug() {
         // This structure cannot be printed either with `fmt::Display` or
         // With  `fmt::Debug`.
@@ -33,21 +32,17 @@ pub mod chapter_1 {
         }
     }
 
-
-    // Define a structure where the fields are nameable for comparison. 
+    // Define a structure where the fields are nameable for comparison.
     #[derive(Debug)]
     pub struct Point2D {
         x: f64,
         y: f64,
-    } 
+    }
 
     // Implement init for Point2D
     impl Point2D {
-        pub fn new(x: f64, y:f64) -> Point2D{
-            Point2D {
-                x,
-                y,
-            }
+        pub fn new(x: f64, y: f64) -> Point2D {
+            Point2D { x, y }
         }
     }
 
@@ -85,18 +80,44 @@ pub mod chapter_1 {
             for (count, v) in vec.iter().enumerate() {
                 // for every element except the first add, a comma.
                 // Use the ? operator to return on erros.
-                if count != 0 { write!(f, ", ")?;}
-                write!(f, "{}", v)?;
+                if count != 0 {
+                    write!(f, ", ")?;
+                }
+                write!(f, "{}: {}", count, v)?;
             }
 
             // Close the oppened bracket and return fmt::Result value
             write!(f, "]")
         }
     }
+
+    pub struct City {
+        pub name: &'static str,
+
+        // Latitude
+        pub lat: f32,
+        // Longitude
+        pub lon: f32,
+    }
+
+    impl fmt::Display for City {
+        // `f` is a buffer, and this method must write the formated string int it.
+        fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+            let lat_c: char = if self.lat >= 0.0 { 'N' } else { 'S' };
+            let lon_c: char = if self.lon >= 0.0 { 'E' } else { 'W' };
+
+            // `write` is like `format!`, bit it will write the formatted string
+            // into a biffer (the first argument)
+            write!(f, "{}: {:.3}°{} {:.3}°{}", 
+        self.name, self.lat.abs(), lat_c, self.lon.abs(), lon_c)
+        }
+    }
 }
 
 #[cfg(test)]
 mod test {
+    use crate::chapter_1::chapter_1::chapter_1::City;
+
     use super::chapter_1::List;
 
     #[test]
@@ -166,6 +187,17 @@ mod test {
     fn format_display() {
         let v: List = List(vec![1, 2, 3]);
         let str: String = format!("{v}");
-        assert_eq!("[1, 2, 3]", str);
+        assert_eq!("[0: 1, 1: 2, 2: 3]", str);
+    }
+
+    #[test]
+    fn format_specifier() {
+        let city1 = City { name: "Dublin", lat: 53.347778, lon: -6.259722 };
+        let city2 = City { name: "Oslo", lat: 59.95, lon: 10.75 };
+        let city3 = City { name: "Vancouver", lat: 49.25, lon: -123.1 };
+
+        assert_eq!("Dublin: 53.348°N 6.260°W", format!("{}", city1));
+        assert_eq!("Oslo: 59.950°N 10.750°E", format!("{}", city2));
+        assert_eq!("Vancouver: 49.250°N 123.100°W", format!("{}", city3));
     }
 }
