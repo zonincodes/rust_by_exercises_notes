@@ -16,8 +16,13 @@ pub mod chapter_1 {
     }
 
     #[derive(Debug)]
+    pub struct MinMax(i64, i64);
 
-    struct MinMax(i64, i64);
+    impl MinMax {
+        pub fn new(x: i64, y: i64) -> MinMax {
+            MinMax(x, y)
+        }
+    }
 
     // implement `Display` for  `MinMax`
 
@@ -27,6 +32,7 @@ pub mod chapter_1 {
             write!(f, "({}, {})", self.0, self.1)
         }
     }
+
 
     // Define a structure where the fields are nameable for comparison. 
     #[derive(Debug)]
@@ -53,11 +59,46 @@ pub mod chapter_1 {
             write!(f, "x: {}, y: {}", self.x, self.y)
         }
     }
-    fn _display() {}
+
+    impl fmt::Binary for Point2D {
+        fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+            // Customize so only `x` and `y` are denoted.
+            write!(f, "x: {:b}, y: {:b}", self.x as i64, self.y as i64)
+        }
+    }
+
+    //  Test Case List
+    // Define a structure named `List` containing a `Vec`.
+
+    pub struct List(pub Vec<i32>);
+
+    impl fmt::Display for List {
+        fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+            // Extract the value using tuple indexing,
+            // and  create a refernce to `vec`.
+            let vec = &self.0;
+
+            write!(f, "[")?;
+            // Iterate over `v` in `vec` while enumerating the iteration
+            // count in `cout`
+
+            for (count, v) in vec.iter().enumerate() {
+                // for every element except the first add, a comma.
+                // Use the ? operator to return on erros.
+                if count != 0 { write!(f, ", ")?;}
+                write!(f, "{}", v)?;
+            }
+
+            // Close the oppened bracket and return fmt::Result value
+            write!(f, "]")
+        }
+    }
 }
 
 #[cfg(test)]
 mod test {
+    use super::chapter_1::List;
+
     #[test]
     fn formart_print() {
         // In general, the `{}` will be automatically replaced with any
@@ -119,5 +160,12 @@ mod test {
         //use let pi = 3.141592 as an estimate for pi.
         let str = format!("{pi:.3}");
         assert_eq!("3.142", str);
+    }
+
+    #[test]
+    fn format_display() {
+        let v: List = List(vec![1, 2, 3]);
+        let str: String = format!("{v}");
+        assert_eq!("[1, 2, 3]", str);
     }
 }
