@@ -1,6 +1,6 @@
-mod chapter_1;
+mod chapters;
 
-use crate::chapter_1::chapter_1::chapter_1::{MinMax, Point2D};
+use crate::chapters::chapter_1::chapter_1::{MinMax, Point2D};
 
 fn main() {
     let minmax = MinMax::new(0, 14);

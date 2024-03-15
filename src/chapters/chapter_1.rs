@@ -116,7 +116,7 @@ pub mod chapter_1 {
 
 #[cfg(test)]
 mod test {
-    use crate::chapter_1::chapter_1::chapter_1::City;
+    use crate::chapters::chapter_1::chapter_1::City;
 
     use super::chapter_1::List;
 
