@@ -4,6 +4,7 @@ pub mod closures {
     // Optionaly body delimination `{}` for a single ecpression (mandatory otherwise).
     // the ability to capture the outer environment variables.
 
+    #[allow(dead_code)]
     pub fn testing() -> (i32, i32) {
         let outer_var = 42;
 

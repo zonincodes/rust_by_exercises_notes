@@ -1,6 +1,6 @@
 mod chapters;
 
-use crate::chapters::{chapter_1::chapter_1::{MinMax, Point2D}, chapter_8::closures::{self, closure_as_parameter}};
+use crate::chapters::{chapter_1::chapter_1::{MinMax, Point2D}, chapter_14::generics::{multiple_bounds::consume, the_problem}, chapter_8::closures::{self, closure_as_parameter}};
 fn main() {
     let minmax = MinMax::new(0, 14);
 
@@ -27,6 +27,8 @@ fn main() {
 
     closures::capturing();
     closure_as_parameter::closure_as_parameter();
+    consume();
+    the_problem::the_problem();
 
 }
 fn layered_option() {

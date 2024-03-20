@@ -1,4 +1,5 @@
 pub mod loops {
+    #[allow(dead_code)]
     pub fn match_numbers(number: i32) -> String {
         println!("Tell me about {}", number);
         let result = match number {
