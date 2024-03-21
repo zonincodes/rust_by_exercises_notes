@@ -260,11 +260,11 @@ pub mod generics {
             }
         }
 
-        fn difference<C: Contains>(container: &C) -> i32 {
+        fn _difference<C: Contains>(container: &C) -> i32 {
             container.last() - container.first()
         }
 
-        pub fn associated_types() {
+        pub fn _associated_types() {
             let number_1 = 3;
             let number_2 = 10;
 
@@ -295,7 +295,7 @@ pub mod generics {
             phantom: PhantomData<B>,
         }
 
-        fn phantom_type_parameters() {
+        fn _phantom_type_parameters() {
             // Here `f32` and `f34` are the hidden parameters.
             // PhantomTuple type specified as `char, f32`.
             let _tuple1: PhantomTuple<char, f32> = PhantomTuple('Q', PhantomData);
@@ -348,7 +348,7 @@ pub mod generics {
                     }
                 }
 
-                fn unit_clarification() {
+                fn _unit_clarification() {
                     let one_foot: Length<Inch> = Length(12.0, PhantomData);
                     // `one_meter` has phantom type parameter `Mm`.
                     let one_meter: Length<Mm> = Length(1000.0, PhantomData);
